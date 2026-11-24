@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metales no ferrosos</title>
+<style>
+:root{--red:#c8102e;--ink:#111;--mut:#555;--bg:#fff;--soft:#f3f3f3;--ok:#1b7f3b;--bad:#c8102e}
+*{box-sizing:border-box;margin:0}
+body{font-family:system-ui,"Segoe UI",Arial,sans-serif;background:linear-gradient(135deg,#fff 0%,#ffe3e7 55%,#ececec 100%) fixed;color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px}
+nav{display:flex;gap:8px;margin-bottom:12px}
+nav button{border:2px solid var(--red);background:#fff;color:var(--red);padding:8px 18px;border-radius:999px;font-weight:700;cursor:pointer}
+nav button.on{background:var(--red);color:#fff}
+.stage{width:100%;max-width:960px;background:var(--bg);border-radius:12px;box-shadow:0 4px 18px #0002;overflow:hidden;position:relative;min-height:480px;display:flex;flex-direction:column}
+.stage::after{content:"";position:absolute;right:0;top:0;width:34%;height:100%;background:linear-gradient(115deg,transparent 40%,var(--red) 40.3%,var(--red) 52%,transparent 52.3%),linear-gradient(115deg,transparent 56%,#d9d9d9 56.3%);opacity:.55;pointer-events:none}
+.bar{height:6px;background:#eee}.bar i{display:block;height:100%;background:var(--red);transition:width .3s}
+.body{flex:1;padding:36px 40px;position:relative;z-index:1;max-width:68%;display:flex;flex-direction:column;justify-content:center;gap:14px;animation:in .35s}
+@keyframes in{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+h1,h2{font-weight:900;line-height:1.1;font-size:clamp(1.6rem,4.4vw,2.8rem)}
+h1 em,h2 em{display:block;font-style:normal;background:linear-gradient(90deg,#c8102e,#ff6b6b,#c8102e);background-size:200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:sh 3s linear infinite}
+h3{font-size:1.1rem;color:var(--red)}
+p,li{font-size:clamp(1rem,2.2vw,1.25rem);line-height:1.5}
+ul{padding-left:1.2rem}
+.tag{font-weight:900;font-size:1.4rem}.tag b{color:var(--red);display:block}
+.big{font-size:clamp(2rem,6vw,3.6rem);font-weight:900;color:var(--red)}
+.cards{display:grid;gap:12px}.card{background:#fff;border:1px solid #ddd;border-left:6px solid var(--red);border-radius:8px;padding:10px 14px}
+.ctl{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;position:relative;z-index:2;background:#fff;border-top:1px solid #eee}
+.ctl button,.btn{background:var(--red);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:700;cursor:pointer}
+.ctl button:disabled{background:#ccc;cursor:default}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid #ddd;border-radius:10px;padding:12px 14px;margin:6px 0;font-size:1.05rem;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--red)}
+.opt.ok{border-color:var(--ok);background:#e8f6ec}.opt.bad{border-color:var(--bad);background:#fdeaea}
+.fb{padding:10px 14px;border-radius:8px;background:#f7f7f7;font-size:1rem;margin-top:6px}
+.quiz .body{max-width:100%}.quiz.stage::after{opacity:.18}
+.stage::before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:7%;bottom:14%;background:radial-gradient(circle at 30% 28%,#fff,#c9c9c9 38%,#5d5d5d);box-shadow:0 18px 40px #0004;opacity:.4;animation:fl 6s ease-in-out infinite;pointer-events:none}
+.body>*{animation:up .55s both}.body>*:nth-child(2){animation-delay:.12s}.body>*:nth-child(3){animation-delay:.24s}.body>*:nth-child(4){animation-delay:.36s}
+li{animation:up .5s both}li:nth-child(2){animation-delay:.15s}li:nth-child(3){animation-delay:.3s}li:nth-child(4){animation-delay:.45s}
+.card{transition:transform .25s,box-shadow .25s}.card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 8px 20px #0003}
+.chips{display:flex;flex-wrap:wrap;gap:12px}.chip{width:104px;padding:10px 6px;border-radius:12px;background:#fff;border:2px solid var(--red);text-align:center;font-weight:700;transition:transform .25s,background .25s,color .25s;animation:up .5s both;cursor:default}
+.chip:hover{transform:translateY(-8px) rotate(-3deg);background:var(--red);color:#fff}.chip b{display:block;font-size:2rem}.chip small{display:block;font-size:.72rem;opacity:.75;font-weight:400}.chip span{font-size:.68rem;opacity:.6;font-weight:400}
+.scale{display:flex;border-radius:12px;overflow:hidden;color:#fff;text-align:center;box-shadow:0 3px 10px #0002}.scale div{padding:9px 4px;transition:opacity .4s}.scale b{display:block;font-size:.85rem}.scale small{font-size:.7rem}
+.opt.bad{animation:shake .4s}.opt.ok{animation:pop .4s}
+.stage:fullscreen{max-width:none;border-radius:0}
+.cf{position:fixed;top:-20px;width:10px;height:14px;animation:fall 3.2s linear forwards;z-index:9;pointer-events:none}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fl{50%{transform:translateY(-22px) rotate(8deg)}}
+@keyframes sh{to{background-position:-200% 0}}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pop{50%{transform:scale(1.03)}}
+@media(max-width:640px){.body{max-width:100%;padding:24px 20px}.stage::after{opacity:.2}}
+</style>
+</head>
+<body>
+<nav><button id="t1" class="on">Presentación</button><button id="t2">Cuestionario (10)</button><button id="fs">⛶ Pantalla completa</button></nav>
+<section class="stage" id="stage"></section>
+<script>
+const L=(t,a)=>`<h3>${t}</h3><ul>${a.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+const CH=(t,a)=>`<h3>${t}</h3><div class="chips">${a.map((c,k)=>`<div class="chip" style="animation-delay:${k*.12}s"><b>${c[0]}</b>${c[1]}<small>${c[2]}</small><span>N.º ${c[3]}</span></div>`).join("")}</div>`;
+const SC=a=>`<div class="scale">${[["Ultraligeros","&lt; 2","#2a9d8f",17],["Ligeros","2 – 5","#e9a21b",25],["Pesados","≥ 5","#c8102e",58]].map((x,k)=>`<div style="flex:${x[3]};background:${x[2]};opacity:${a<0||a==k?1:.25}"><b>${x[0]}</b><small>${x[1]} kg/dm³</small></div>`).join("")}</div>`;
+function boom(){const c=["#c8102e","#ff6b6b","#e9a21b","#2a9d8f","#111"];for(let k=0;k<70;k++){const e=document.createElement("span");e.className="cf";e.style.cssText=`left:${Math.random()*100}vw;background:${c[k%5]};animation-delay:${Math.random()*.8}s;animation-duration:${2.4+Math.random()*1.6}s`;document.body.appendChild(e);setTimeout(()=>e.remove(),5000)}}
+const S=[
+{h:"Non-Ferrous<em>Metals</em>",b:"<p><b>Denilson Doval</b> 1193215</p><p><b>Nathaly Ortega</b> 1981562</p>"},
+{h:"¿Qué son los<em>Metales No Ferrosos?</em>",b:"<p>Los metales no ferrosos son aquellos que no tienen el hierro como elemento principal.</p><p class='tag'>What is it?</p>"},
+{h:"Origin of Non<em>Ferrous Metals</em>",b:"<p>Los metales no ferrosos se obtienen principalmente de minerales mediante procesos de extracción y refinación.</p>"},
+{h:"Características<em>Principales</em>",b:CH("Estructura FCC · cúbica centrada en las caras",[["Al","Aluminio","Aluminum",13],["Cu","Cobre","Copper",29],["Au","Oro","Gold",79],["Ni","Níquel","Nickel",28]])+"<p class='tag'>Main <b>Features</b></p>"},
+{h:"Características<em>Principales</em>",b:CH("Estructura BCC · cúbica centrada en el cuerpo",[["Cr","Cromo","Chromium",24],["Mo","Molibdeno","Molybdenum",42],["W","Tungsteno","Tungsten",74],["V","Vanadio","Vanadium",23]])+"<p class='tag'>Main <b>Features</b></p>"},
+{h:"Características<em>Principales</em>",b:CH("Estructura HCP · hexagonal compacta",[["Mg","Magnesio","Magnesium",12],["Ti","Titanio","Titanium",22],["Zn","Zinc","Zinc",30],["Co","Cobalto","Cobalt",27]])+"<p class='tag'>Main <b>Features</b></p>"},
+{h:"Common non-ferrous metals<em>and applications</em>",b:"<div class='cards'><div class='card'>"+L("Aluminio – Aluminum",["✈️ Industria aeroespacial y automotriz","🏗️ Construcción"])+"</div><div class='card'>"+L("Cobre – Copper",["⚕️ Medicina","🛰️ Industria militar y aeroespacial"])+"</div></div>"},
+{h:"Common non-ferrous metals<em>and applications</em>",b:"<div class='cards'><div class='card'>"+L("Titanio – Titanium",["🚀 Industria aeroespacial y médica","♨️ Intercambiadores de calor"])+"</div><div class='card'>"+L("Zinc – Zinc",["🏢 Industria de la construcción","🚗 Industria automotriz"])+"</div></div>"},
+{h:"Classification",b:SC(-1)+"<ul><li>Heavyweight (Pesados)</li><li>Lightweight (Ligeros)</li><li>Super lightweight (Ultraligeros)</li></ul>"},
+{h:"HEAVYWEIGHT<em>Pesados</em>",b:SC(2)+"<p class='big'>≥ 5 kg/dm³</p><p>Son aquellos metales cuya densidad es igual o mayor de 5 kg/dm³; tales como: estaño, cobre, zinc.</p>"},
+{h:"LIGHTWEIGHT<em>Ligeros</em>",b:SC(1)+"<p class='big'>2 – 5 kg/dm³</p><p>Son los metales cuya densidad está comprendida entre 2 y 5 kg/dm³, como el aluminio y el titanio.</p>"},
+{h:"SUPER LIGHTWEIGHT<em>Ultraligeros</em>",b:SC(0)+"<p class='big'>&lt; 2 kg/dm³</p><p>Su densidad es menor de 2 kg/dm³; como el magnesio y el berilio.</p>"},
+{h:"Conclusiones",b:L("Ideas clave",["Los metales no ferrosos no tienen hierro como elemento principal.","Se obtienen de minerales por extracción y refinación.","Se clasifican por densidad: pesados, ligeros y ultraligeros."])},
+{h:"Gracias<em>Thank you · Obrigado</em>",b:"<p>“¿Qué le dijo un imán a un metal no ferroso? Nada, porque no hubo atracción.”</p>"}
+];
+const Q=[
+["¿Cuál es la característica principal que identifica a los materiales no ferrosos?",["Son materiales cuya composición principal contiene hierro.","Son materiales que no tienen el hierro como elemento base.","Son metales utilizados únicamente en instalaciones eléctricas.","Son materiales que presentan un elevado magnetismo."],1,"Los no ferrosos no tienen el hierro como elemento principal."],
+["¿Cómo se clasifican los metales no ferrosos teniendo en cuenta su densidad?",["En dos grupos: resistentes y livianos.","En tres grupos: pesados, ligeros y ultraligeros.","En cuatro grupos: pesados, semipesados, ligeros y moleculares.","En un único grupo general."],1,"La clasificación por densidad tiene tres grupos."],
+["¿Qué densidad deben presentar los metales para clasificarse dentro del grupo de los pesados?",["Una densidad inferior a 2 kg/dm³.","Una densidad entre 2 y 5 kg/dm³.","Una densidad igual o superior a 5 kg/dm³.","Una densidad exacta de 10 kg/dm³."],2,"Pesados: densidad igual o mayor de 5 kg/dm³."],
+["¿Cuáles de los siguientes elementos son ejemplos de metales no ferrosos pesados?",["Aluminio y titanio.","Magnesio y berilio.","Cobre, zinc y estaño.","Aluminio y magnesio."],2,"Cobre, zinc y estaño son pesados."],
+["¿Qué rango de densidad corresponde a los metales no ferrosos ligeros?",["Densidades superiores a 5 kg/dm³.","Densidades entre 2 y 5 kg/dm³.","Densidades inferiores a 1 kg/dm³.","Densidades superiores a 10 kg/dm³."],1,"Ligeros: entre 2 y 5 kg/dm³."],
+["¿Qué metales se utilizan como ejemplos de la clasificación de materiales no ferrosos ligeros?",["Estaño y zinc.","Aluminio y titanio.","Magnesio y berilio.","Cobre y bronce."],1,"El aluminio y el titanio son ligeros."],
+["¿Cuál es el límite de densidad establecido para identificar un metal ultraligero?",["Una densidad menor a 2 kg/dm³.","Una densidad igual a 5 kg/dm³.","Una densidad entre 2 y 5 kg/dm³.","Una densidad superior a 10 kg/dm³."],0,"Ultraligeros: densidad menor de 2 kg/dm³."],
+["¿Qué elementos pertenecen a la categoría de metales no ferrosos ultraligeros?",["Aluminio y cobre.","Titanio y zinc.","Magnesio y berilio.","Cobalto y cromo."],2,"El magnesio y el berilio son ultraligeros."],
+["¿Qué metales no ferrosos pertenecen a la estructura cristalina cúbica centrada en las caras (FCC)?",["Titanio, magnesio, zinc y cobalto.","Únicamente el cromo.","Aluminio, cobre, níquel, oro, plata, platino y plomo.","Magnesio y berilio."],2,"Aluminio, cobre, níquel y oro (entre otros) son FCC."],
+["¿En qué sectores tecnológicos e industriales tiene utilidad el cobre?",["En la industria aeroespacial y automotriz.","En los campos médico, militar y aeroespacial.","Exclusivamente en ambientes de altas temperaturas.","Únicamente en la fabricación de toldos y remolques."],1,"El cobre se usa en medicina, industria militar y aeroespacial."]
+];
+const st=document.getElementById("stage"),t1=document.getElementById("t1"),t2=document.getElementById("t2");
+let i=0,q=0,sel=[],score=0;
+function deck(){t1.className="on";t2.className="";st.className="stage";const s=S[i];
+st.innerHTML=`<div class="bar"><i style="width:${(i+1)/S.length*100}%"></i></div><div class="body" key="${i}"><h2>${s.h}</h2>${s.b}</div><div class="ctl"><button id="p" ${i?"":"disabled"}>← Anterior</button><span>${i+1} / ${S.length}</span><button id="n">${i<S.length-1?"Siguiente →":"Ir al cuestionario"}</button></div>`;
+document.getElementById("p").onclick=()=>{i--;deck()};
+document.getElementById("n").onclick=()=>{if(i<S.length-1){i++;deck()}else quiz(true)}}
+function quiz(reset){t2.className="on";t1.className="";st.className="stage quiz";
+if(reset){q=0;sel=[];score=0}
+if(q>=Q.length){const pct=Math.round(score/Q.length*100);
+st.innerHTML=`<div class="body"><h2>Resultado<em>${score} / ${Q.length} (${pct}%)</em></h2><p>${pct>=80?"¡Excelente trabajo!":pct>=60?"Buen resultado, repasa las diapositivas de clasificación.":"Repasa la presentación e inténtalo de nuevo."}</p><div><button class="btn" id="r">Reintentar</button></div></div>`;
+document.getElementById("r").onclick=()=>quiz(true);if(pct>=60)boom();return}
+const [tx,op,ok,ex]=Q[q],a=sel[q];
+st.innerHTML=`<div class="bar"><i style="width:${q/Q.length*100}%"></i></div><div class="body"><h3>Pregunta ${q+1} de ${Q.length}</h3><p><b>${tx}</b></p><div>${op.map((o,k)=>`<button class="opt ${a==null?"":k==ok?"ok":k==a?"bad":""}" data-k="${k}" ${a==null?"":"disabled"}>${"abcd"[k]}) ${o}</button>`).join("")}</div>${a==null?"":`<div class="fb">${a==ok?"✅ ¡Correcto! ":"❌ Incorrecto. "}${ex}</div><div><button class="btn" id="nx">${q<Q.length-1?"Siguiente":"Ver resultado"}</button></div>`}</div>`;
+st.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const k=+b.dataset.k;sel[q]=k;if(k==ok)score++;quiz()});
+const nx=document.getElementById("nx");if(nx)nx.onclick=()=>{q++;quiz()}}
+t1.onclick=deck;t2.onclick=()=>quiz();
+document.onkeydown=e=>{if(!t1.classList.contains("on"))return;if(e.key=="ArrowRight"&&i<S.length-1){i++;deck()}if(e.key=="ArrowLeft"&&i>0){i--;deck()}};
+let x0=0;st.ontouchstart=e=>x0=e.touches[0].clientX;
+st.ontouchend=e=>{if(!t1.classList.contains("on"))return;const d=e.changedTouches[0].clientX-x0;if(d<-50&&i<S.length-1){i++;deck()}if(d>50&&i>0){i--;deck()}};
+document.getElementById("fs").onclick=()=>st.requestFullscreen&&st.requestFullscreen();
+deck();
+</script>
+</body>
+</html>
